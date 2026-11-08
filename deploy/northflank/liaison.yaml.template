@@ -1,0 +1,49 @@
+daemon:
+  pprof:
+    addr: 127.0.0.1:6060
+    enable: true
+manager:
+  listen:
+    addr: 0.0.0.0:${MANAGER_PORT}
+    network: tcp
+    tls:
+      enable: false
+      certs:
+      - cert: /opt/liaison/certs/server.crt
+        key: /opt/liaison/certs/server.key
+${WEB_TLS_CERTS}
+  db: /opt/liaison/data/liaison.db
+  packages_dir: /opt/liaison/edge
+  web_dir: /opt/liaison/web
+  frontier_edge_port: ${FRONTIER_PORT}
+  server_url: ${SERVER_URL}
+  web_domain: "${LIAISON_WEB_DOMAIN}"
+  jwt_secret: ${JWT_SECRET}
+  ssh_host_key_file: /opt/liaison/data/ssh_host_ed25519_key
+  ssh_idle_timeout: 30m
+  ssh_max_duration: 8h
+  guacd_addr: ${GUACD_ADDR}
+  guacd_bridge_addr: ${GUACD_BRIDGE_ADDR}
+  guacd_bridge_host: ${GUACD_BRIDGE_HOST}
+  agent:
+    output_language: ${AGENT_OUTPUT_LANGUAGE}
+    enabled: ${AGENT_ENABLED}
+    base_url: ${AGENT_BASE_URL}
+    model: ${AGENT_MODEL}
+    api_key_env: OPENAI_API_KEY
+    request_timeout: ${AGENT_REQUEST_TIMEOUT}
+    max_model_steps: ${AGENT_MAX_MODEL_STEPS}
+    approval_expiry: ${AGENT_APPROVAL_EXPIRY}
+frontier:
+  controlplane_url: http://127.0.0.1:${FRONTIER_CONTROLPLANE_PORT}
+  dial:
+    addrs:
+      - 127.0.0.1:30011
+    network: tcp
+    tls:
+      enable: false
+log:
+  level: info
+  file: /opt/liaison/logs/liaison.log
+  maxsize: 100
+  maxrolls: 10
